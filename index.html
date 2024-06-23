@@ -7,7 +7,7 @@
     <title>게임 점수 표</title>
     <style>
         .table-container {
-            margin: 0 auto; /* 가운데 정렬 */
+            margin: 0 auto; 
             width: 100%;
         }
         table {
@@ -16,9 +16,9 @@
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid black; /* 테두리 스타일 지정 */
-            padding: 10px; /* 셀 안의 여백 */
-            text-align: center; /* 셀 안의 텍스트 가운데 정렬 */
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center; 
         }
 
         thead {
@@ -28,6 +28,30 @@
         button:active {
           background-color: black;
           color: white;
+        }
+
+        #game-table {
+          max-width: 100vw; /* 화면 너비의 최대치로 설정 */
+          table-layout: fixed; /* 테이블 레이아웃 고정 */
+        }
+
+        #penalty-table {
+          pointer-events : none;
+          max-width: 100%;
+          table-layout: fixed;
+        }
+
+        #game-table th:first-child, 
+        #game-table td:first-child,
+        #penalty-table td,
+        #penalty-table th {
+          width: 80px;
+        }
+
+        #game-table input[type="text"],
+        #penalty-table input {
+          width: 100%; /* 입력 필드 너비 화면 전체에 맞게 설정 */
+          box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 너비 설정 */
         }
 
         .calculate-btn, .reset-btn {
@@ -43,31 +67,19 @@
             font-size: 14px;
         }
 
-        #game-table th {
-          width: 25%;
-        }
-
         input[type=text], #total-amount, #penalty-table input {
           height: 30px;
           font-size: medium;
           text-align: center;
         }
 
-        input[type=text] {
-          width: 100px;
-        }
-
         .reset-btn {
           background-color: red;
         }
 
-        #penalty-table {
-          pointer-events : none;
-        }
-
         .radio-btn {
-          width: 30%;
-          height: 45px;
+          width: 20%;
+          height: 25px;
           border: 1px solid black;
           display: inline-block;
         }
@@ -80,7 +92,7 @@
           display: block;
           margin: 0 auto;
           text-align: center;
-          line-height: 45px;
+          line-height: 25px;
         }
 
         .radio-btn input[type=radio]:checked + label {
@@ -224,7 +236,7 @@
             </tbody>
         </table>
         <label for="total-amount" class="amount">게임비 총액:</label>
-        <input type="number" id="total-amount" value="15000">
+        <input type="number" id="total-amount" value="15000" style="width: 80px;">
         <button class="calculate-btn" onclick="calculatePenalties()">계산</button>
         <button class="reset-btn" onclick="resetTables()">초기화</button>
     </div>
