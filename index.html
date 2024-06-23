@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>게임 점수 표</title>
+    <style>
+        .table-container {
+            margin: 0 auto; /* 가운데 정렬 */
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            margin-bottom: 20px; 
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black; /* 테두리 스타일 지정 */
+            padding: 10px; /* 셀 안의 여백 */
+            text-align: center; /* 셀 안의 텍스트 가운데 정렬 */
+        }
+
+        thead {
+          background-color: #dfdfdf;
+        }
+
+        button:active {
+          background-color: black;
+          color: white;
+        }
+
+        .calculate-btn, .reset-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        #game-table th {
+          width: 25%;
+        }
+
+        input[type=text], #total-amount, #penalty-table input {
+          height: 30px;
+          font-size: medium;
+          text-align: center;
+        }
+
+        input[type=text] {
+          width: 100px;
+        }
+
+        .reset-btn {
+          background-color: red;
+        }
+
+        #penalty-table {
+          pointer-events : none;
+        }
+
+        .radio-btn {
+          width: 30%;
+          height: 45px;
+          border: 1px solid black;
+          display: inline-block;
+        }
+
+        .radio-btn input[type=radio] {
+          display: none;
+        }
+
+        .radio-btn label {
+          display: block;
+          margin: 0 auto;
+          text-align: center;
+          line-height: 45px;
+        }
+
+        .radio-btn input[type=radio]:checked + label {
+          background-color: black;
+          color: white;
+        }
+
+        .amount {
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+
+        #burden1, #burden2, #burden3 {
+          font-weight: bold;
+          background-color: #dfdfdf;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="table-container">
+        <h2>게임 점수 표</h2>
+        <table id="game-table">
+            <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>1게임</th>
+                    <th>2게임</th>
+                    <th>3게임</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" id="player1" value=""></td>
+                    <td id="score1_game1"> 
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-1-score" id="player1-game1-1" value="1"><label for="player1-game1-1">1</label>
+                      </div>
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-1-score" id="player1-game1-2" value="2"><label for="player1-game1-2">2</label>
+                      </div>
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-1-score" id="player1-game1-3" value="3"><label for="player1-game1-3">3</label>
+                      </div>
+                    </td>
+                    <td id="score1_game2"> 
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-2-score" id="player1-game2-1" value="1"><label for="player1-game2-1">1</label>
+                      </div>
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-2-score" id="player1-game2-2" value="2"><label for="player1-game2-2">2</label>
+                      </div>
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-2-score" id="player1-game2-3" value="3"><label for="player1-game2-3">3</label>
+                      </div>
+                    </td>
+                    <td id="score1_game3"> 
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-3-score" id="player1-game3-1" value="1"><label for="player1-game3-1">1</label>
+                      </div>
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-3-score" id="player1-game3-2" value="2"><label for="player1-game3-2">2</label>
+                      </div>
+                      <div class="radio-btn">
+                        <input type="radio" name="player1-3-score" id="player1-game3-3" value="3"><label for="player1-game3-3">3</label>
+                      </div>
+                    </td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="player2" value=""></td>
+                  <td id="score2_game1"> 
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-1-score" id="player2-game1-1" value="1"><label for="player2-game1-1">1</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-1-score" id="player2-game1-2" value="2"><label for="player2-game1-2">2</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-1-score" id="player2-game1-3" value="3"><label for="player2-game1-3">3</label>
+                    </div>
+                  </td>
+                  <td id="score2_game2"> 
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-2-score" id="player2-game2-1" value="1"><label for="player2-game2-1">1</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-2-score" id="player2-game2-2" value="2"><label for="player2-game2-2">2</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-2-score" id="player2-game2-3" value="3"><label for="player2-game2-3">3</label>
+                    </div>
+                  </td>
+                  <td id="score2_game3"> 
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-3-score" id="player2-game3-1" value="1"><label for="player2-game3-1">1</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-3-score" id="player2-game3-2" value="2"><label for="player2-game3-2">2</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player2-3-score" id="player2-game3-3" value="3"><label for="player2-game3-3">3</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="text" id="player3" value=""></td>
+                  <td id="score3_game1"> 
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-1-score" id="player3-game1-1" value="1"><label for="player3-game1-1">1</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-1-score" id="player3-game1-2" value="2"><label for="player3-game1-2">2</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-1-score" id="player3-game1-3" value="3"><label for="player3-game1-3">3</label>
+                    </div>
+                  </td>
+                  <td id="score3_game2"> 
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-2-score" id="player3-game2-1" value="1"><label for="player3-game2-1">1</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-2-score" id="player3-game2-2" value="2"><label for="player3-game2-2">2</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-2-score" id="player3-game2-3" value="3"><label for="player3-game2-3">3</label>
+                    </div>
+                  </td>
+                  <td id="score3_game3"> 
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-3-score" id="player3-game3-1" value="1"><label for="player3-game3-1">1</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-3-score" id="player3-game3-2" value="2"><label for="player3-game3-2">2</label>
+                    </div>
+                    <div class="radio-btn">
+                      <input type="radio" name="player3-3-score" id="player3-game3-3" value="3"><label for="player3-game3-3">3</label>
+                    </div>
+                  </td>
+                </tr>
+            </tbody>
+        </table>
+        <label for="total-amount" class="amount">게임비 총액:</label>
+        <input type="number" id="total-amount" value="15000">
+        <button class="calculate-btn" onclick="calculatePenalties()">계산</button>
+        <button class="reset-btn" onclick="resetTables()">초기화</button>
+    </div>
+
+    <div class="table-container">
+        <h2>돈 내놔</h2>
+        <table id="penalty-table" >
+            <thead>
+                <tr>
+                    <th>이름</th>
+                    <th>1게임 점수</th>
+                    <th>2게임 점수</th>
+                    <th>3게임 점수</th>
+                    <th>점수 합계</th>
+                    <th>점수 비율</th>
+                    <th>부담액</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input id="player1is" value=""></td>
+                    <td><input type="number" id="penalty1" ></td>
+                    <td><input type="number" id="penalty2" ></td>
+                    <td><input type="number" id="penalty3" ></td>
+                    <td><input type="number" id="total-penalty1" ></td>
+                    <td><input type="text" id="penalty-rate1" ></td>
+                    <td><input type="text" id="burden1" ></td>
+                </tr>
+                <tr>
+                    <td><input id="player2is" value=""></td>
+                    <td><input type="number" id="penalty4" ></td>
+                    <td><input type="number" id="penalty5" ></td>
+                    <td><input type="number" id="penalty6" ></td>
+                    <td><input type="number" id="total-penalty2" ></td>
+                    <td><input type="text" id="penalty-rate2" ></td>
+                    <td><input type="text" id="burden2" ></td>
+                </tr>
+                <tr>
+                    <td><input id="player3is" value=""></td>
+                    <td><input type="number" id="penalty7" ></td>
+                    <td><input type="number" id="penalty8" ></td>
+                    <td><input type="number" id="penalty9" ></td>
+                    <td><input type="number" id="total-penalty3" ></td>
+                    <td><input type="text" id="penalty-rate3" ></td>
+                    <td><input type="text" id="burden3" ></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function calculatePenalties() {
+            var totalAmount = parseFloat(document.getElementById("total-amount").value);
+
+            // 선수 1 계산
+            const selectedRadioPlayer1score1 = document.querySelector("input[name='player1-1-score']:checked");
+            var score1_game1 = Math.floor(selectedRadioPlayer1score1.value);
+            const selectedRadioPlayer1score2 = document.querySelector("input[name='player1-2-score']:checked");
+            var score1_game2 = Math.floor(selectedRadioPlayer1score2.value);
+            const selectedRadioPlayer1score3 = document.querySelector("input[name='player1-3-score']:checked");
+            var score1_game3 = Math.floor(selectedRadioPlayer1score3.value);
+            var penalty1_game1 = calculatePenalty(score1_game1);
+            var penalty1_game2 = calculatePenalty(score1_game2);
+            var penalty1_game3 = calculatePenalty(score1_game3);
+            var totalPenalty1 = penalty1_game1 + penalty1_game2 + penalty1_game3;
+            var totalPenaltyRate1 = (totalPenalty1 > 0 ? ((totalPenalty1 / (penalty1_game1 + penalty1_game2 + penalty1_game3)) * 100) : 0);
+
+            // 선수 2 계산
+            const selectedRadioPlayer2score1 = document.querySelector("input[name='player2-1-score']:checked");
+            var score2_game1 = Math.floor(selectedRadioPlayer2score1.value);
+            const selectedRadioPlayer2score2 = document.querySelector("input[name='player2-2-score']:checked");
+            var score2_game2 = Math.floor(selectedRadioPlayer2score2.value);
+            const selectedRadioPlayer2score3 = document.querySelector("input[name='player2-3-score']:checked");
+            var score2_game3 = Math.floor(selectedRadioPlayer2score3.value);
+            var penalty2_game1 = calculatePenalty(score2_game1);
+            var penalty2_game2 = calculatePenalty(score2_game2);
+            var penalty2_game3 = calculatePenalty(score2_game3);
+            var totalPenalty2 = penalty2_game1 + penalty2_game2 + penalty2_game3;
+            var totalPenaltyRate2 = (totalPenalty2 > 0 ? ((totalPenalty2 / (penalty2_game1 + penalty2_game2 + penalty2_game3)) * 100) : 0);
+
+            // 선수 3 계산
+            const selectedRadioPlayer3score1 = document.querySelector("input[name='player3-1-score']:checked");
+            var score3_game1 = Math.floor(selectedRadioPlayer3score1.value);
+            const selectedRadioPlayer3score2 = document.querySelector("input[name='player3-2-score']:checked");
+            var score3_game2 = Math.floor(selectedRadioPlayer3score2.value);
+            const selectedRadioPlayer3score3 = document.querySelector("input[name='player3-3-score']:checked");
+            var score3_game3 = Math.floor(selectedRadioPlayer3score3.value);
+            var penalty3_game1 = calculatePenalty(score3_game1);
+            var penalty3_game2 = calculatePenalty(score3_game2);
+            var penalty3_game3 = calculatePenalty(score3_game3);
+            var totalPenalty3 = penalty3_game1 + penalty3_game2 + penalty3_game3;
+            var totalPenaltyRate3 = (totalPenalty3 > 0 ? ((totalPenalty3 / (penalty3_game1 + penalty3_game2 + penalty3_game3)) * 100) : 0);
+
+            // 벌점 비율 조정
+            var totalPenaltyRateSum = totalPenaltyRate1 + totalPenaltyRate2 + totalPenaltyRate3;
+            if (totalPenaltyRateSum > 100) {
+                var adjustRatio = 100 / totalPenaltyRateSum;
+                totalPenaltyRate1 *= adjustRatio;
+                totalPenaltyRate2 *= adjustRatio;
+                totalPenaltyRate3 *= adjustRatio;
+                
+                
+            }
+
+            //이름 반환
+            var playername1 = document.getElementById("player1").value;
+            var playername2 = document.getElementById("player2").value;
+            var playername3 = document.getElementById("player3").value;
+
+
+            // 결과 출력
+            document.getElementById("player1is").value = playername1;
+            document.getElementById("penalty1").value = penalty1_game1;
+            document.getElementById("penalty2").value = penalty1_game2;
+            document.getElementById("penalty3").value = penalty1_game3;
+            document.getElementById("total-penalty1").value = totalPenalty1;
+            document.getElementById("penalty-rate1").value=((totalPenalty1/totalPenaltyRateSum)*100).toFixed(1)+"%";
+            document.getElementById("burden1").value = (Math.round((totalAmount * (totalPenalty1/totalPenaltyRateSum))/100)*100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+
+            document.getElementById("player2is").value = playername2;
+            document.getElementById("penalty4").value = penalty2_game1;
+            document.getElementById("penalty5").value = penalty2_game2;
+            document.getElementById("penalty6").value = penalty2_game3;
+            document.getElementById("total-penalty2").value = totalPenalty2;
+            document.getElementById("penalty-rate2").value=((totalPenalty2/totalPenaltyRateSum)*100).toFixed(1)+"%";
+            document.getElementById("burden2").value = (Math.round((totalAmount * (totalPenalty2/totalPenaltyRateSum))/100)*100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+
+            document.getElementById("player3is").value = playername3;
+            document.getElementById("penalty7").value = penalty3_game1;
+            document.getElementById("penalty8").value = penalty3_game2;
+            document.getElementById("penalty9").value = penalty3_game3;
+            document.getElementById("total-penalty3").value = totalPenalty3;
+            document.getElementById("penalty-rate3").value=((totalPenalty3/totalPenaltyRateSum)*100).toFixed(1)+"%";
+            document.getElementById("burden3").value = (Math.round((totalAmount * (totalPenalty3/totalPenaltyRateSum))/100)*100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+        }
+
+        function resetTables() {
+            // 게임 점수 초기화
+            document.getElementById("score1_game1").value = "";
+            document.getElementById("score1_game2").value = "";
+            document.getElementById("score1_game3").value = "";
+            document.getElementById("score2_game1").value = "";
+            document.getElementById("score2_game2").value = "";
+            document.getElementById("score2_game3").value = "";
+            document.getElementById("score3_game1").value = "";
+            document.getElementById("score3_game2").value = "";
+            document.getElementById("score3_game3").value = "";
+
+            document.querySelectorAll('input[type=radio]:checked').forEach(function(radio) {
+              radio.checked = false;
+            });
+
+            // 벌점 표 초기화
+            document.getElementById("penalty1").value = "";
+            document.getElementById("penalty2").value = "";
+            document.getElementById("penalty3").value = "";
+            document.getElementById("total-penalty1").value = "";
+            document.getElementById("penalty-rate1").value = "";
+            document.getElementById("burden1").value = "";
+
+            document.getElementById("penalty4").value = "";
+            document.getElementById("penalty5").value = "";
+            document.getElementById("penalty6").value = "";
+            document.getElementById("total-penalty2").value = "";
+            document.getElementById("penalty-rate2").value = "";
+            document.getElementById("burden2").value = "";
+
+            document.getElementById("penalty7").value = "";
+            document.getElementById("penalty8").value = "";
+            document.getElementById("penalty9").value = "";
+            document.getElementById("total-penalty3").value = "";
+            document.getElementById("penalty-rate3").value = "";
+            document.getElementById("burden3").value = "";
+        }
+
+        function calculatePenalty(score) {
+            if (score === 1) {
+                return 15;
+            } else if (score === 2) {
+                return 35;
+            } else if (score === 3) {
+                return 50;
+            } else {
+                return 0;
+            }
+        }
+    </script>
+</body>
+</html>
